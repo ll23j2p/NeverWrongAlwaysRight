@@ -117,6 +117,25 @@ Written by Aeron Jarvis and James Avery
 #define RGB565_GREY_14  0x3CE7  // #e7e7e7
 #define RGB565_GREY_15  0xFFFF  // #ffffff
 
+// Game 3 Sunset palette:
+#define RGB565_GAME3_SUNSET_0   0x8210  // #111111
+#define RGB565_GAME3_SUNSET_1   0xAA39  // #393457
+#define RGB565_GAME3_SUNSET_2   0x7063  // #606c81
+#define RGB565_GAME3_SUNSET_3   0xFFFF  // #ffffff
+#define RGB565_GAME3_SUNSET_4   0xFFD7  // #d3ffff
+#define RGB565_GAME3_SUNSET_5   0x4E1C  // #1e8875	
+#define RGB565_GAME3_SUNSET_6   0x8C5D  // #5bb361
+#define RGB565_GAME3_SUNSET_7   0x2068  // #6b0404
+#define RGB565_GAME3_SUNSET_8   0x20F8  // #ff0404
+#define RGB565_GAME3_SUNSET_9   0x0EF6  // #f7c076
+#define RGB565_GAME3_SUNSET_10  0x8AFC  // #f99252
+#define RGB565_GAME3_SUNSET_11  0xCDC3  // #c7786f
+#define RGB565_GAME3_SUNSET_12  0x89FB  // #fd724e
+#define RGB565_GAME3_SUNSET_13  0x9B21  // #2432d8
+#define RGB565_GAME3_SUNSET_14  0x6859  // #5f2f45
+#define RGB565_GAME3_SUNSET_15  0x68A1  // #a02f40	
+
+
 
 
 // ========== Buffer Configuration ==========
@@ -131,7 +150,7 @@ typedef enum {
     PALETTE_DEFAULT = 0,
     PALETTE_GREYSCALE = 1,
     PALETTE_VINTAGE = 2,
-    PALETTE_CUSTOM = 3
+    PALETTE_GAME3_SUNSET = 3
 } LCD_Palette;
 
 /* Set Colour Palette
