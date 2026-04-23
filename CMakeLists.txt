@@ -57,7 +57,14 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Game implementations (placeholder - students implement these)
     ${CMAKE_SOURCE_DIR}/game_1/Game_1.c
     ${CMAKE_SOURCE_DIR}/game_2/Game_2.c
+
     ${CMAKE_SOURCE_DIR}/game_3/Game_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Player_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Mobs_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Projectiles_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Map1_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Camera_3.c
+    ${CMAKE_SOURCE_DIR}/game_3/Render_3.c
 )
 
 # Add include paths
