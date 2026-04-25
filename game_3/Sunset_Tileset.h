@@ -14,6 +14,8 @@ typedef struct {
 #define SUNSET_TILESET_COUNT 55
 #define SUNSET_TILESET_WIDTH  176
 #define SUNSET_TILESET_HEIGHT 80
+#define SUNSET_TILESET_COLS 11
+#define SUNSET_TILESET_ROWS 5
 
 static const TileProps sunSet_tileProps[SUNSET_TILESET_COUNT] = {
   //  solid, platform, hazard

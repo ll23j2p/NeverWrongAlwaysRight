@@ -22,10 +22,13 @@ typedef struct {
     float x, y;
     float vx, vy;
     int health;
-    int facing;  // 1 = right, -1 = left
-    int aim;  // currently 1 for up, -1 for down, 0 for horizontal - to be replaced with separate joystick aiming later
+    int facing;         // 1 = right, -1 = left
+    int aim;            // currently 1 for up, -1 for down, 0 for horizontal - to be replaced with separate joystick aiming later
     int grounded;
     int shoot_cooldown;
+    int anim_row;       // current spritesheet row: 0=Rface/normal, 1=Rface/up, 2=Rface/down, 3=Lface/normal, 4=Lface/up, 5=Lface/down
+    int anim_col;       // current spritesheet col: 0=idle, 1=run1, 2=run2, 3=jump, 4=dead
+    int anim_timer;     // counts frames before advancing animation
 } Player;
 
 typedef struct {
@@ -33,23 +36,26 @@ typedef struct {
     float vx, vy;
     int active;
     int damage;
-    int owner;        // OWNER_PLAYER or OWNER_ENEMY
+    int owner;          // OWNER_PLAYER or OWNER_ENEMY
 } Bullet;
 
 typedef struct {
     float x, y;
     int health;
     int active;
-    int type;         // enemy type enum
-    int state;        // patrol/chase/attack etc
+    int type;           // enemy type enum
+    int state;          // patrol/chase/attack etc
 } Enemy;
 
 typedef struct {
-    float x, y;       // world position of top-left of screen
+    float x, y;         // world position of top-left of screen
 } Camera;
 
 // --- Constants ---
 #define DRAW_SCALE              2       // scale factor for rendering
+#define SCREEN_WIDTH            120     // 240 / DRAW_SCALE
+#define SCREEN_HEIGHT           120     // 240 / DRAW_SCALE
+
 #define TILE_WIDTH              16      // std tile width in pixels (unscaled)
 #define TILE_HEIGHT             16      // std tile height in pixels (unscaled)
 
@@ -60,10 +66,11 @@ typedef struct {
 #define PLAYER_SPEED            4.0f    // player velocity in pixels per frame
 #define JUMP_FORCE              9.0f    // initial velocity applied when jumping
 
+#define ANIM_FRAME_DURATION     6       // 6 gameframes per animation frame = 5 fps animations at 30 fps
 #define SHOOT_COOLDOWN_FRAMES   10      // at 30 fps, this is about 1/3 second between shots
 #define PLAYER_MAX_HEALTH       3       // three hits? maybe?
 
-#define GRAVITY                 0.45f   // gravity applied per frame - currently gives 20 frames until apex (about 2/3 second at 30 fps)
+#define GRAVITY                 1   // gravity applied to player.vy per frame
 #define MAX_BULLETS             32
 #define MAX_ENEMIES             16
 #define MAX_RAYS                8
@@ -122,12 +129,12 @@ void UpdateRays(void);
 void UpdateCamera(void);
 
 // --- Render_3.c Functions ---
-void DrawBackground(void);
-void DrawTilemap(void);
+void DrawBackground(const uint8_t *image, const uint16_t image_width, const uint16_t image_height);
+void DrawTilemap(const uint8_t *tileset, const int tileset_cols);
 void DrawMobs(void);
 void DrawBullets(void);
 void DrawRays(void);
-void DrawPlayer(void);
+void DrawPlayer(const uint8_t *spritesheet, const uint16_t spritesheet_width);
 void DrawHUD(void);
 
 #endif // GAME_3_H
