@@ -160,7 +160,7 @@ void RenderPlayState(void) {
 
     LCD_clear();  // Writes zeroes to frame buffer 32 bits at a time
 
-    DrawBackground((uint8_t*)Sunset_Backdrop, SUNSET_BACKDROP_WIDTH, SUNSET_BACKDROP_HEIGHT);
+    DrawBackground();
     DrawTilemap((uint8_t*)Sunset_Tileset, SUNSET_TILESET_COLS);
     DrawMobs();
     DrawBullets();

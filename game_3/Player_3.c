@@ -136,14 +136,14 @@ void UpdatePlayer(void) {
   */
   // determine anim_row based on facing and aim:
   if (player.facing == 1) {                                   // facing right and...
-    if (player.aim == 1)    player.anim_row = 1;              // looking up
-    if (player.aim == -1)   player.anim_row = 2;              // looking down
-    else                    player.anim_row = 0;              // looking straight
+    if      (player.aim == 1)    player.anim_row = 1;         // looking up
+    else if (player.aim == -1)   player.anim_row = 2;         // looking down
+    else                         player.anim_row = 0;         // looking straight
   } 
   else {                                                      // facing left and...
-    if (player.aim == 1)    player.anim_row = 4;              // looking up
-    if (player.aim == -1)   player.anim_row = 5;              // looking down
-    else                    player.anim_row = 3;              // looking straight
+    if      (player.aim == 1)     player.anim_row = 4;        // looking up
+    else if (player.aim == -1)    player.anim_row = 5;        // looking down
+    else                          player.anim_row = 3;        // looking straight
   }
 
   static int cycle_index = 0;
@@ -162,9 +162,9 @@ void UpdatePlayer(void) {
     static const int run_cycle[] = {1, 0, 2, 0};
     player.anim_timer++;
     if (player.anim_timer >= ANIM_FRAME_DURATION) {
+      player.anim_col = run_cycle[cycle_index];
       player.anim_timer = 0;
       cycle_index = (cycle_index + 1) % 4;
-      player.anim_col = run_cycle[cycle_index];
     }
   }
 

@@ -66,7 +66,7 @@ typedef struct {
 #define PLAYER_SPEED            4.0f    // player velocity in pixels per frame
 #define JUMP_FORCE              9.0f    // initial velocity applied when jumping
 
-#define ANIM_FRAME_DURATION     6       // 6 gameframes per animation frame = 5 fps animations at 30 fps
+#define ANIM_FRAME_DURATION     2       // 6 gameframes per animation frame = 5 fps animations at 30 fps
 #define SHOOT_COOLDOWN_FRAMES   10      // at 30 fps, this is about 1/3 second between shots
 #define PLAYER_MAX_HEALTH       3       // three hits? maybe?
 
@@ -129,7 +129,7 @@ void UpdateRays(void);
 void UpdateCamera(void);
 
 // --- Render_3.c Functions ---
-void DrawBackground(const uint8_t *image, const uint16_t image_width, const uint16_t image_height);
+void DrawBackground(void);
 void DrawTilemap(const uint8_t *tileset, const int tileset_cols);
 void DrawMobs(void);
 void DrawBullets(void);
