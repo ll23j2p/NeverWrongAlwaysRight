@@ -37,8 +37,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     
     // Handle BT2
     if (GPIO_Pin == BTN2_Pin) {
-        // Software debouncing (200ms)
-        if ((current_time - last_btn2_interrupt) > 200) {
+        // Software debouncing (200ms) Jackp: dropped this to 50ms as button is unresponsive
+        if ((current_time - last_btn2_interrupt) > 50) {
             last_btn2_interrupt = current_time;
             
             // Toggle LED to indicate button press
