@@ -136,7 +136,7 @@ void RenderTitleScreen(void) {
 }
 
 void UpdatePlayState(void) {
-  // main Gameplay Loop - Reads input, updates status and position of game entities,
+  // main Gameplay Loop - updates status and position of game entities,
   // checks collisions, updates camera, checks win/loss conditions, etc
 
   // if (-insert pause button here-) {  // If pause button pressed, switch to pause state
@@ -149,8 +149,8 @@ void UpdatePlayState(void) {
   UpdateMobs();
   UpdateBullets();
   UpdateRays();
-
   UpdateCamera();
+  
   CheckGameOverConditions();
   CheckWinConditions();
 
@@ -158,17 +158,17 @@ void UpdatePlayState(void) {
 
 void RenderPlayState(void) {
 
-    LCD_clear();  // Writes zeroes to frame buffer 32 bits at a time
+  LCD_clear();  // Writes zeroes to frame buffer 32 bits at a time
 
-    DrawBackground((uint8_t*)Sunset_Backdrop, SUNSET_BACKDROP_WIDTH, SUNSET_BACKDROP_HEIGHT);
-    DrawTilemap((uint8_t*)Sunset_Tileset, SUNSET_TILESET_COLS);
-    DrawMobs();
-    DrawBullets();
-    DrawRays();
-    DrawPlayer((uint8_t*)CharSprite, CHAR_WIDTH);
-    DrawHUD();
+  DrawBackground();
+  // DrawTilemap((uint8_t*)Sunset_Tileset, SUNSET_TILESET_COLS); // tile layout has been merged with background image to improve performance
+  DrawMobs();
+  DrawBullets();
+  DrawRays();
+  DrawPlayer((uint8_t*)CharSprite, CHAR_WIDTH);
+  DrawHUD();
 
-    LCD_Refresh(&cfg0);
+  LCD_Refresh(&cfg0);
 
 }
 

@@ -1,5 +1,5 @@
 #include "LCD.h"
-
+#include <stdint.h>
 
 // Image buffer storing pixel data, 4 pixels per byte (2 bits per pixel)
 static uint8_t image_buffer[BUFFER_LENGTH];
@@ -415,6 +415,19 @@ void LCD_Fill(ST7789V2_cfg_t* cfg, const uint16_t x0, const uint16_t y0, const u
 
   uint32_t len = (x1-x0 + 1) * (y1-y0 + 1);
   ST7789V2_Fill(cfg, &colour_, len);
+}
+
+void LCD_Buffer_Blitz_Scaledx2(const uint8_t *src, uint16_t src_x, uint16_t src_y, uint16_t src_width, uint16_t cols, uint16_t rows) {
+
+  for (int row = 0; row < rows; row++) {
+    int dest_row = row * 2;
+    for (int col = 0; col < cols; col++) {
+        uint8_t pixel = src[(src_y + row) * src_width + (src_x + col)];
+        uint8_t packed = (pixel << 4) | pixel;
+        image_buffer[dest_row * 120 + col]       = packed;
+        image_buffer[(dest_row + 1) * 120 + col] = packed;
+    }
+  }
 }
 
 const unsigned char font5x7_[480] = {

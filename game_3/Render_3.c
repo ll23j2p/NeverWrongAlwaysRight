@@ -1,33 +1,49 @@
 #include "Game_3.h"
 #include "LCD.h"
 #include "Map1_3.h"
+#include "Sunset_Backdrop.h"
 #include "Sunset_Tileset.h"
 #include <stdint.h>
+#include <string.h>
 
 // --- Function definitions ---
 
-void DrawBackground(const uint8_t *image, const uint16_t image_width, const uint16_t image_height) {
 
-  for (int y = 0; y < SCREEN_HEIGHT; y++) {
-    for (int x = 0; x < SCREEN_WIDTH; x++) {
+// OLD
+// void DrawBackground(const uint8_t *image, const uint16_t image_width, const uint16_t image_height) {
 
-      const uint8_t pixel = *((image + ((int)(y + camera.y)) * image_width) + (int)(x + camera.x));
-      // nb: easier to read as "pixel = image[((int)camera.y + y) * image_width + ((int)camera.x + x)]" but the pointer
-      // arithmetic version is how the render functions in the LCD library are written, so we'll keep it like this for now.
+//   for (int y = 0; y < SCREEN_HEIGHT; y++) {
+//     for (int x = 0; x < SCREEN_WIDTH; x++) {
 
-      if (pixel == 255) { continue; }
+//       const uint8_t pixel = *((image + ((int)(y + camera.y)) * image_width) + (int)(x + camera.x));
+//       // nb: easier to read as "pixel = image[((int)camera.y + y) * image_width + ((int)camera.x + x)]" but the pointer
+//       // arithmetic version is how the render functions in the LCD library are written, so we'll keep it like this for now.
 
-      for (int dy = 0; dy < DRAW_SCALE; dy++) {
-        for (int dx = 0; dx < DRAW_SCALE; dx++) {
+//       if (pixel == 255) { continue; }
+
+//       for (int dy = 0; dy < DRAW_SCALE; dy++) {
+//         for (int dx = 0; dx < DRAW_SCALE; dx++) {
          
-          LCD_Set_Pixel(x * DRAW_SCALE + dx, y * DRAW_SCALE + dy, pixel);
+//           LCD_Set_Pixel(x * DRAW_SCALE + dx, y * DRAW_SCALE + dy, pixel);
 
-        }
-      }
+//         }
+//       }
 
-    }
-  }
+//     }
+//   }
 
+// }
+
+// NEW
+void DrawBackground(void) {
+  LCD_Buffer_Blitz_Scaledx2(
+    (const uint8_t*)Sunset_Backdrop, 
+    (uint16_t)camera.x, 
+    (uint16_t)camera.y, 
+    SUNSET_BACKDROP_WIDTH, 
+    SCREEN_WIDTH, 
+    SCREEN_HEIGHT
+  );
 }
 
 void DrawTilemap(const uint8_t *tileset, const int tileset_cols) {
@@ -38,7 +54,7 @@ void DrawTilemap(const uint8_t *tileset, const int tileset_cols) {
   int tile_x = tile0_x;  // "current" tiles in the loop
   int tile_y = tile0_y;
 
-  // calculate screen offset into tiles
+  // calculate screen/tile offset
   int offset_x = (int)camera.x % TILE_WIDTH;
   int offset_y = (int)camera.y % TILE_HEIGHT;
 

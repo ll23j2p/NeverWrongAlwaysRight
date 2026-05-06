@@ -4,11 +4,14 @@
 
 void UpdateCamera(void) { // updates camera position based on player position
   
-    // center camera on player:
+  //  center camera on player:
   camera.x = player.x - (SCREEN_WIDTH / 2) + (TILE_WIDTH / 2);
-  camera.y = player.y - (SCREEN_WIDTH / 2) + (TILE_WIDTH / 2);
+  camera.y = player.y - (SCREEN_HEIGHT / 2) + (TILE_HEIGHT / 2);
 
-  // clamp to map boundaries:
+  //  snap x to even pixels for 4bpp byte alignment
+  camera.x = (int)camera.x & ~1;  // clears the lowest bit, rounding down to even
+
+  //  clamp to map boundaries:
   if (camera.x < 0) {
     camera.x = 0;
   }
@@ -18,8 +21,8 @@ void UpdateCamera(void) { // updates camera position based on player position
   if (camera.x > (MAP1_WIDTH * TILE_WIDTH) - SCREEN_WIDTH) {
     camera.x = (MAP1_WIDTH * TILE_WIDTH) - SCREEN_WIDTH;
   }
-  if (camera.y > (MAP1_HEIGHT * TILE_WIDTH) - SCREEN_HEIGHT) {
-    camera.y = (MAP1_HEIGHT * TILE_WIDTH) - SCREEN_HEIGHT;
+  if (camera.y > (MAP1_HEIGHT * TILE_HEIGHT) - SCREEN_HEIGHT) {
+    camera.y = (MAP1_HEIGHT * TILE_HEIGHT) - SCREEN_HEIGHT;
   }
   
 }
