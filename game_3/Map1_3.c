@@ -8,13 +8,13 @@ const uint8_t tilemap1[MAP1_HEIGHT][MAP1_WIDTH] = {
     // Row 1
     { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
     // Row 2
-    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 33, 35},
     // Row 3
-    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  8, 44, 46},
     // Row 4
-    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 29, 30, 31},
+    { 0,  0,  0,  0,  0,  26, 26, 26, 0, 26, 26, 26, 26, 26,  0,  0, 26, 26, 26, 26},
     // Row 5
-    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 52, 53},
+    { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 29, 30, 31},
     // Row 6
     { 0,  0, 43,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 41, 42},
     // Row 7
@@ -22,7 +22,7 @@ const uint8_t tilemap1[MAP1_HEIGHT][MAP1_WIDTH] = {
     // Row 8
     {29, 30, 31, 32,  0,  0,  0, 11, 54, 11, 11,  0,  0,  0, 26,  0,  0,  0, 41, 42},
     // Row 9
-    { 0, 41, 42,  0,  0,  0,  0, 29, 30, 31, 32,  0,  0,  0,  0,  0,  0,  0, 52, 53},
+    { 0, 41, 42,  0,  0,  0,  0, 29, 30, 31, 32,  0,  0,  0,  9,  0,  0,  0, 52, 53},
     // Row 10
     { 0, 41, 42,  0,  0,  0,  0,  0, 41, 42,  0,  0,  0,  0,  0,  0,  0, 15, 41, 42},
     // Row 11
@@ -36,9 +36,7 @@ const uint8_t tilemap1[MAP1_HEIGHT][MAP1_WIDTH] = {
 };
 
 // --- Map Functions: ---
-/**
---- Get Tile Properties ---
-*/
+/* --- Get Tile Properties --- */
 TileProps GetTileProps(int tile_x, int tile_y) {
 
   // If out of bounds, treat as solid
@@ -53,8 +51,6 @@ TileProps GetTileProps(int tile_x, int tile_y) {
 
 }
 
-/**
---- Helper Functions to convert world coords (px) to tilemap coords (tiles) ---
-*/
+/* --- Helper Functions to convert world coords (px) to tilemap coords (tiles) --- */
 int WorldToTileX(float world_x) { return (int)(world_x / TILE_WIDTH); }
 int WorldToTileY(float world_y) { return (int)(world_y / TILE_HEIGHT); }

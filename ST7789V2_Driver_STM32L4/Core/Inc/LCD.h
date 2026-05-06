@@ -10,6 +10,7 @@ Written by Aeron Jarvis and James Avery
 #define LCD_h
 
 #include "ST7789V2_Driver.h"
+#include <stdint.h>
 #include <stdlib.h>
 
 // ========== Colour definitions ==========
@@ -316,6 +317,12 @@ void LCD_Fill_Buffer(const uint8_t colour);
 *   @param  y1 - End y-coordinate (bottom-right)
 *   @param  colour - Value from 0-15 referring to the colour map colour*/
 void LCD_Fill(ST7789V2_cfg_t* cfg, const uint16_t x0, const uint16_t y0, const uint16_t x1, const uint16_t y1, const uint16_t colour);
+
+/*  jackp: adding this in the name of efficiency and full colour backdrops. 
+     - Assumes source image is fully opaque. 
+     - Should hopefully allow full panning artwork without killing the frame rate.
+     - Takes a 120x120 px square from a source image and completely fills the buffer with it at 2x scale */
+void LCD_Buffer_Blitz_Scaledx2(const uint8_t *src, uint16_t src_x, uint16_t src_y, uint16_t src_width, uint16_t cols, uint16_t rows);
 
 extern const unsigned char font5x7_[480];// = {
 //     0x00, 0x00, 0x00, 0x00, 0x00,// (space)
