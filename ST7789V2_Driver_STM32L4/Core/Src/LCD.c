@@ -1,7 +1,5 @@
 #include "LCD.h"
 #include <stdint.h>
-#include <string.h>
-
 
 // Image buffer storing pixel data, 4 pixels per byte (2 bits per pixel)
 static uint8_t image_buffer[BUFFER_LENGTH];
@@ -420,24 +418,15 @@ void LCD_Fill(ST7789V2_cfg_t* cfg, const uint16_t x0, const uint16_t y0, const u
 }
 
 void LCD_Buffer_Blitz_Scaledx2(const uint8_t *src, uint16_t src_x, uint16_t src_y, uint16_t src_width, uint16_t cols, uint16_t rows) {
-  
-  static uint8_t row_buffer [120];  // 240px * 4bpp = 120 bytes
 
   for (int row = 0; row < rows; row++) {
-
-    // build each row at 2x scale:
+    int dest_row = row * 2;
     for (int col = 0; col < cols; col++) {
-      uint8_t pixel = src[(src_y + row) * src_width + (src_x + col)];
-      row_buffer[col] = (pixel << 4) | pixel;  
-      // pixel is 4 bits in a byte (ie: 0000 0101), bitwise shift gives us (0101 0000) instead
-      // bitwise OR (|) combines the shifted pixel and the original pixel (0101 0101)
+        uint8_t pixel = src[(src_y + row) * src_width + (src_x + col)];
+        uint8_t packed = (pixel << 4) | pixel;
+        image_buffer[dest_row * 120 + col]       = packed;
+        image_buffer[(dest_row + 1) * 120 + col] = packed;
     }
-
-    // write row_buffer to two rows in LCD's image_buffer:
-    int destination_row = row * 2;
-    memcpy(&image_buffer[destination_row * 120],    row_buffer, 120);
-    memcpy(&image_buffer[(destination_row + 1) * 120], row_buffer, 120);
-
   }
 }
 

@@ -8,9 +8,7 @@
 
 void UpdatePlayer(void) {
 
-  /**
-  --- apply x joystick input to player velocity and facing (facing to be handled by 2nd joystick aim later) ---
-  */
+  /* --- apply x joystick input to player velocity and facing (facing to be handled by 2nd joystick aim later) --- */
   if (joystick_data.coord_mapped.x > 0) {
     player.vx = PLAYER_SPEED;
     player.facing = 1;
@@ -24,9 +22,7 @@ void UpdatePlayer(void) {
   }
 
 
-  /**
-  --- apply y joystick input to player aim (to be replaced with 2nd joystick aiming later) ---
-  */
+  /* --- apply y joystick input to player aim (to be replaced with 2nd joystick aiming later) --- */
   if (joystick_data.coord_mapped.y > 0) {
     player.aim = 1;  // up
   }
@@ -38,9 +34,7 @@ void UpdatePlayer(void) {
   }
 
 
-  /**
-  --- handle gravity and player jumping ---
-  */
+  /* --- handle gravity and player jumping --- */
   player.vy += GRAVITY;  // always apply gravity
 
   if (jump_button) {
@@ -54,9 +48,7 @@ void UpdatePlayer(void) {
   }
 
 
-  /**
-  --- update player x position and resolve world collisions ---
-  */
+  /* --- update player x position and resolve world collisions --- */
   // apply x velocity
   player.x += player.vx;
 
@@ -92,9 +84,7 @@ void UpdatePlayer(void) {
   }
 
 
-  /**
-  --- update player y position and resolve world collisions ---
-  */
+  /* --- update player y position and resolve world collisions --- */
   // apply y velocity
   player.y += player.vy;
   player.grounded = 0;  // assume !grounded until checked (i think this will handle walking off ledges?)
@@ -131,9 +121,7 @@ void UpdatePlayer(void) {
     }
   }
 
-  /**
-  --- update anim_row and anim_col fields in player struct ---
-  */
+  /* --- update anim_row and anim_col fields in player struct --- */
   // determine anim_row based on facing and aim:
   if (player.facing == 1) {                                   // facing right and...
     if      (player.aim == 1)    player.anim_row = 1;         // looking up

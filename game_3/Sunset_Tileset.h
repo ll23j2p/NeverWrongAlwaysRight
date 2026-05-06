@@ -1,9 +1,7 @@
 #ifndef SUNSET_TILESET_H
 #define SUNSET_TILESET_H
 
-/**
---- TileProps struct and lookup table for tileset metadata ---
-*/
+/* --- TileProps struct and lookup table for tileset metadata --- */
 
 typedef struct {
   uint8_t solid;
@@ -66,7 +64,7 @@ static const TileProps sunSet_tileProps[SUNSET_TILESET_COUNT] = {
   {0, 0, 0},  // 40 - decoration (paint in front of player?)
   {0, 0, 0},  // 41 - background pillar
   {0, 0, 0},  // 42 - background pillar
-  {0, 1, 0},  // 43 - top of statue
+  {0, 0, 0},  // 43 - top of statue
 
   {0, 0, 0},  // 44 - building left side
   {0, 0, 0},  // 45 - building entrance
@@ -78,14 +76,11 @@ static const TileProps sunSet_tileProps[SUNSET_TILESET_COUNT] = {
   {1, 0, 0},  // 51 - block
   {0, 0, 0},  // 52 - background pillar
   {0, 0, 0},  // 53 - background pillar
-  {0, 0, 0},  // 54 - base of statue
+  {0, 1, 0},  // 54 - base of statue
 
 };
 
-/**
---- Sunset Tileset pixel data ---
-*/
-
+/* --- Sunset Tileset pixel data --- */
 
 static const uint8_t Sunset_Tileset[80][176] =
 {
