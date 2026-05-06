@@ -112,7 +112,7 @@ volatile uint32_t g_tim6_ticks = 0;
 volatile uint32_t g_tim7_ticks = 0;
 
 // ===== BUTTON DEBOUNCING CONFIGURATION =====
-#define DEBOUNCE_DELAY 200  // 200ms debounce time
+#define DEBOUNCE_DELAY 100  // 100ms debounce time
 
 // ===== TIMER CONFIGURATION =====
 // Available timers for student use:
@@ -239,7 +239,7 @@ int main(void)
     // ===== INITIALIZE MENU SYSTEM =====
     Menu_Init(&menu);
     
-    printf("Menu system initialized. Press BT3 to select.\n");
+    printf("Menu system initialized. Press BT2 to select.\n");
 
     // ===== MAIN GAME LOOP =====
     // Hybrid pattern: Each component (menu/games) runs its own loop

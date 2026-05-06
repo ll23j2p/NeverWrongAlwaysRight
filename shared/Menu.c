@@ -13,7 +13,7 @@ extern Joystick_t joystick_data;     // Current joystick readings
 static const char* menu_options[] = {
     "Game 1",
     "Game 2", 
-    "Game 3"
+    "Null Sector"
 };
 #define NUM_MENU_OPTIONS 3
 
@@ -45,7 +45,7 @@ static void render_home_menu(MenuSystem* menu) {
     }
     
     // Instructions
-    LCD_printString("Press BT3", 50, 240, 1, 1);
+    LCD_printString("Press BT2", 50, 240, 1, 1);
     
     LCD_Refresh(&cfg0);
 }
@@ -94,7 +94,7 @@ MenuState Menu_Run(MenuSystem* menu) {
         last_direction = current_direction;
         
         // Handle button press to select current option
-        if (current_input.btn3_pressed) {
+        if (current_input.btn2_pressed) {
             // User pressed button - select the highlighted option
             if (menu->selected_option == 0) {
                 selected_game = MENU_STATE_GAME_1;

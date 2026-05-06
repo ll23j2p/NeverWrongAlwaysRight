@@ -64,13 +64,13 @@ typedef struct {
 #define PLAYER_HITBOX_OFFSET_X  3       // starts 3px from left edge of sprite
 
 #define PLAYER_SPEED            4.0f    // player velocity in pixels per frame
-#define JUMP_FORCE              9.0f    // initial velocity applied when jumping
+#define JUMP_FORCE              10.0f    // initial velocity applied when jumping
 
 #define ANIM_FRAME_DURATION     6       // 6 gameframes per animation frame = 5 fps animations at 30 fps
 #define SHOOT_COOLDOWN_FRAMES   10      // at 30 fps, this is about 1/3 second between shots
 #define PLAYER_MAX_HEALTH       3       // three hits? maybe?
 
-#define GRAVITY                 1   // gravity applied to player.vy per frame
+#define GRAVITY                 1.1   // gravity applied to player.vy per frame
 #define MAX_BULLETS             32
 #define MAX_ENEMIES             16
 #define MAX_RAYS                8
