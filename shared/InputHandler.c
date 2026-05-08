@@ -17,6 +17,7 @@ void Input_Init(void) {
     current_input.btn3_pressed = 0;
     current_input.btn4_pressed = 0;
     current_input.btn5_pressed = 0;
+    current_input.btn5_held = 0;
     btn2_raw_press = 0;
     btn3_raw_press = 0;
     btn4_raw_press = 0;
@@ -30,6 +31,7 @@ void Input_Read(void) {
     current_input.btn3_pressed = btn3_raw_press;
     current_input.btn4_pressed = btn4_raw_press;
     current_input.btn5_pressed = btn5_raw_press;
+    current_input.btn5_held = (HAL_GPIO_ReadPin(BTN5_GPIO_Port, BTN5_Pin) == GPIO_PIN_RESET);
     
     // Reset the flags after reading so they only trigger once
     btn2_raw_press = 0;

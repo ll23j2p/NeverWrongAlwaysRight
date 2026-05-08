@@ -164,8 +164,7 @@ void UpdatePlayer(void) {
   }
 
   /* --- shooting --- */
-  if (shoot_button) {
-    shoot_button = 0; // clear one-shot flag
+  if (shoot_button || current_input.btn5_held) {
     PlayerShoot();
   }
   if (player.shoot_cooldown > 0) {

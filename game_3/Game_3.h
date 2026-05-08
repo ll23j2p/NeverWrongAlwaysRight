@@ -68,7 +68,7 @@ typedef struct {
 #define JUMP_FORCE              9.4f    // initial velocity applied when jumping
 
 #define ANIM_FRAME_DURATION     2       // 6 gameframes per animation frame = 5 fps animations at 30 fps
-#define SHOOT_COOLDOWN_FRAMES   10      // at 30 fps, this is about 1/3 second between shots
+#define SHOOT_COOLDOWN_FRAMES   6      // at 30 fps, this is about 1/5 second between shots
 #define PLAYER_MAX_HEALTH       3       // three hits? maybe?
 
 #define GRAVITY                 1   // gravity applied to player.vy per frame
