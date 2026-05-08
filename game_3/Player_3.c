@@ -1,10 +1,11 @@
 #include "Game_3.h"
+#include "InputHandler.h"
 #include "Map1_3.h"
 #include "Sunset_Tileset.h"
 
 // --- Button redefinitions for easier reading ---
-#define jump_button current_input.btn2_pressed
-#define shoot_button current_input.btn4_pressed
+#define jump_button current_input.btn4_pressed
+#define shoot_button current_input.btn5_pressed
 
 void UpdatePlayer(void) {
 
@@ -23,10 +24,10 @@ void UpdatePlayer(void) {
 
 
   /* --- apply y joystick input to player aim (to be replaced with 2nd joystick aiming later) --- */
-  if (joystick_data.coord_mapped.y > 0) {
+  if (joystick_data.direction == N) {
     player.aim = 1;  // up
   }
-  else if (joystick_data.coord_mapped.y < 0) {
+  else if (joystick_data.direction == S) {
     player.aim = -1;  // down
   }
   else {
@@ -37,7 +38,7 @@ void UpdatePlayer(void) {
   /* --- handle gravity and player jumping --- */
   player.vy += GRAVITY;  // always apply gravity
 
-  if (jump_button || current_input.btn4_pressed || current_input.btn5_pressed) {
+  if (jump_button) {
     jump_button = 0;  // clear flag - possibly change later to allow holding jump for variable height or double jumps
     if (player.grounded) { 
       player.vy = -JUMP_FORCE;
@@ -162,6 +163,13 @@ void UpdatePlayer(void) {
     cycle_index = 0;  // reset running cycle
   }
 
-  // handle shooting...
+  /* --- shooting --- */
+  if (shoot_button) {
+    shoot_button = 0; // clear one-shot flag
+    PlayerShoot();
+  }
+  if (player.shoot_cooldown > 0) {
+    player.shoot_cooldown--;
+  }
 
 }
