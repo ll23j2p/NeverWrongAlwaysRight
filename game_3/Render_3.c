@@ -4,6 +4,8 @@
 #include "Sunset_Backdrop.h"
 #include "Sunset_Tileset.h"
 #include "Char.h"
+#include "HoppyMob.h"
+#include "Mobs_3.h"
 #include <math.h>
 #include <stdint.h>
 #include <string.h>
@@ -162,7 +164,44 @@ void DrawTilemap(const uint8_t *tileset, const int tileset_cols) {
 }
 
 void DrawMobs(void) {
-    // Implementation for drawing mobs
+  for (int i = 0; i < MAX_ENEMIES; i++) {
+
+    if (!enemies[i].active) {
+      continue;
+    }
+
+    Enemy *enemy = &enemies[i];
+
+    int draw_x = (int)(enemy->x - camera.x);
+    int draw_y = (int)(enemy->y - camera.y);
+
+    // Optional: skip if completely off-screen
+    if (draw_x > SCREEN_WIDTH || draw_x + ENEMY_WIDTH < 0 ||
+        draw_y > SCREEN_HEIGHT || draw_y + ENEMY_HEIGHT < 0) {
+      continue;
+    }
+
+    int src_x = enemy->anim_col * ENEMY_WIDTH;
+    int src_y = enemy->anim_row * ENEMY_HEIGHT;
+
+    for (int y = 0; y < ENEMY_HEIGHT; y++) {
+      for (int x = 0; x < ENEMY_WIDTH; x++) {
+
+        const uint8_t pixel = HoppyMob[src_y + y][src_x + x];
+
+        if (pixel == 255) {
+          continue;
+        }
+
+        for (int dy = 0; dy < DRAW_SCALE; dy++) {
+          for (int dx = 0; dx < DRAW_SCALE; dx++) {
+            LCD_Set_Pixel((draw_x + x) * DRAW_SCALE + dx,
+                          (draw_y + y) * DRAW_SCALE + dy, pixel);
+          }
+        }
+      }
+    }
+  }
 }
 
 void DrawRays(void)

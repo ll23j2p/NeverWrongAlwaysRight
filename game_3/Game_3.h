@@ -30,15 +30,8 @@ typedef struct {
     int anim_row;       // current spritesheet row: 0=Rface/normal, 1=Rface/up, 2=Rface/down, 3=Lface/normal, 4=Lface/up, 5=Lface/down
     int anim_col;       // current spritesheet col: 0=idle, 1=run1, 2=run2, 3=jump, 4=dead
     int anim_timer;     // counts frames before advancing animation
+    int hurt_timer;     // i frames after getting hit
 } Player;
-
-typedef struct {
-    float x, y;
-    int health;
-    int active;
-    int type;           // enemy type enum
-    int state;          // patrol/chase/attack etc
-} Enemy;
 
 typedef struct {
     float x, y;         // world position of top-left of screen
@@ -51,6 +44,16 @@ typedef struct {
   int lifetime; // frames remaining
   int damage;
 } Ray;
+
+// little collision checker to get player-mob and ray-enemy collisions written quick
+static inline int CheckAABB(float ax, float ay, float aw, float ah,
+                            float bx, float by, float bw, float bh)
+{
+    return (ax < bx + bw &&
+            ax + aw > bx &&
+            ay < by + bh &&
+            ay + ah > by);
+}
 
 // --- Constants ---
 #define DRAW_SCALE              2       // scale factor for rendering
@@ -72,7 +75,6 @@ typedef struct {
 #define PLAYER_MAX_HEALTH       3       // three hits? maybe?
 
 #define GRAVITY                 1   // gravity applied to player.vy per frame
-#define MAX_ENEMIES             8
 #define MAX_RAYS                8
 #define RAY_LENGTH              120
 #define RAY_STEP                4
@@ -80,7 +82,6 @@ typedef struct {
 // --- Global extern declarations ---
 extern GameState gamestate;
 extern Player    player;
-extern Enemy     enemies[MAX_ENEMIES];
 extern Camera    camera;
 extern Ray rayArray[MAX_RAYS];
 
@@ -98,6 +99,8 @@ MenuState Game3_Run(void);
 void ReadPlayerInput(void);
 
 void InitialiseHardware(void);  // set up joystick, LCD, timers etc for game3 
+void InitMobs(void);
+void InitRays(void);
 
 void UpdateTitleScreen(void); 
 void RenderTitleScreen(void); 
@@ -114,14 +117,8 @@ void RenderGameOverScreen(void);
 void UpdateWinScreen(void); 
 void RenderWinScreen(void);
 
-void CheckGameOverConditions(void);
-void CheckWinConditions(void);
-
 // --- Player_3.c Functions ---
 void UpdatePlayer(void);
-
-// --- Mobs_3.c Functions ---
-void UpdateMobs(void);
 
 // --- Projectiles_3.c Functions ---
 void InitRays(void);

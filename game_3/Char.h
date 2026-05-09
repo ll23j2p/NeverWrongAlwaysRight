@@ -1,6 +1,8 @@
 #ifndef CHAR_H
 #define CHAR_H
 
+#include <stdint.h>
+
 #define CHAR_WIDTH 80
 #define CHAR_HEIGHT 96
 
