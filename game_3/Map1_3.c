@@ -41,7 +41,7 @@ TileProps GetTileProps(int tile_x, int tile_y) {
 
   // If out of bounds, treat as solid
   if (tile_x < 0 || tile_x >= MAP1_WIDTH || 
-      tile_y < 0 || tile_y >= MAP1_HEIGHT) {
+      tile_y >= MAP1_HEIGHT) {
     TileProps solid = {1, 0, 0};
     return solid;
   }

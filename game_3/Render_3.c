@@ -3,11 +3,45 @@
 #include "Map1_3.h"
 #include "Sunset_Backdrop.h"
 #include "Sunset_Tileset.h"
+#include "Char.h"
+#include "HoppyMob.h"
+#include "Mobs_3.h"
+#include <math.h>
 #include <stdint.h>
 #include <string.h>
 
+const WeaponSprite weaponSprites[WEAPON_DIR_COUNT] = {
+    //src_x, src_y, width, height, offset_x, offset_y, muzzle_x, muzzle_y
+
+    // face right:
+    {64, 16, 10, 5, 9, 9, 19, 12},
+    // face right, aim up:
+    {64, 32, 5, 10, 9, -2, 12, -2},
+    // face right, aim down:
+    {72, 64, 5, 10, 9, 10, 12, 22},
+    // face left:
+    {64, 24, 10, 5, -3, 9, -3, 12},
+    // face left, aim up:
+    {72, 32, 5, 10, 2, -2, 5, -2},
+    // face left, aim down:
+    {64, 64, 5, 10, 2, 11, 5, 21},
+};
+
 // --- Function definitions ---
 
+int GetWeaponSpriteIndex(void) {
+    // helper function for selecting weapon sprite
+
+    if (player.facing == 1) {
+        if (player.aim > 0) return WEAPON_RIGHT_UP;
+        if (player.aim < 0) return WEAPON_RIGHT_DOWN;
+        return WEAPON_RIGHT;
+    } else {
+        if (player.aim > 0) return WEAPON_LEFT_UP;
+        if (player.aim < 0) return WEAPON_LEFT_DOWN;
+        return WEAPON_LEFT;
+    }
+}
 
 // OLD
 // void DrawBackground(const uint8_t *image, const uint16_t image_width, const uint16_t image_height) {
@@ -130,15 +164,126 @@ void DrawTilemap(const uint8_t *tileset, const int tileset_cols) {
 }
 
 void DrawMobs(void) {
-    // Implementation for drawing mobs
+  for (int i = 0; i < MAX_ENEMIES; i++) {
+
+    if (!enemies[i].active) {
+      continue;
+    }
+
+    Enemy *enemy = &enemies[i];
+
+    int draw_x = (int)(enemy->x - camera.x);
+    int draw_y = (int)(enemy->y - camera.y);
+
+    // Optional: skip if completely off-screen
+    if (draw_x > SCREEN_WIDTH || draw_x + ENEMY_WIDTH < 0 ||
+        draw_y > SCREEN_HEIGHT || draw_y + ENEMY_HEIGHT < 0) {
+      continue;
+    }
+
+    int src_x = enemy->anim_col * ENEMY_WIDTH;
+    int src_y = enemy->anim_row * ENEMY_HEIGHT;
+
+    for (int y = 0; y < ENEMY_HEIGHT; y++) {
+      for (int x = 0; x < ENEMY_WIDTH; x++) {
+
+        const uint8_t pixel = HoppyMob[src_y + y][src_x + x];
+
+        if (pixel == 255) {
+          continue;
+        }
+
+        for (int dy = 0; dy < DRAW_SCALE; dy++) {
+          for (int dx = 0; dx < DRAW_SCALE; dx++) {
+            LCD_Set_Pixel((draw_x + x) * DRAW_SCALE + dx,
+                          (draw_y + y) * DRAW_SCALE + dy, pixel);
+          }
+        }
+      }
+    }
+  }
 }
 
-void DrawBullets(void) {
-    // Implementation for drawing bullets
+void DrawRays(void)
+{
+    for (int i = 0; i < MAX_RAYS; i++) {
+        if (!rayArray[i].active) {
+            continue;
+        }
+
+        float screen_x0 = rayArray[i].x0 - camera.x;
+        float screen_y0 = rayArray[i].y0 - camera.y;
+        float screen_x1 = rayArray[i].x1 - camera.x;
+        float screen_y1 = rayArray[i].y1 - camera.y;
+
+        float dx = screen_x1 - screen_x0;
+        float dy = screen_y1 - screen_y0;
+
+        float steps = fabsf(dx) > fabsf(dy) ? fabsf(dx) : fabsf(dy);
+
+        if (steps < 1.0f) {
+            steps = 1.0f;
+        }
+
+        float x_inc = dx / steps;
+        float y_inc = dy / steps;
+
+        float x = screen_x0;
+        float y = screen_y0;
+
+        for (int step = 0; step <= (int)steps; step++) {
+            int draw_x = (int)x;
+            int draw_y = (int)y;
+
+            // quick screen bounds check
+            if (draw_x >= 0 && draw_x < SCREEN_WIDTH &&
+                draw_y >= 0 && draw_y < SCREEN_HEIGHT) {
+
+                // draw scaled pixel
+                for (int sy = 0; sy < DRAW_SCALE; sy++) {
+                    for (int sx = 0; sx < DRAW_SCALE; sx++) {
+                        LCD_Set_Pixel(draw_x * DRAW_SCALE + sx,
+                                      draw_y * DRAW_SCALE + sy,
+                                      9); // colour index
+                    }
+                }
+            }
+
+            x += x_inc;
+            y += y_inc;
+        }
+    }
 }
 
-void DrawRays(void) {
-    // Implementation for drawing rays
+void DrawPlayerWeapon(const uint8_t *spritesheet, const uint16_t spritesheet_width) {
+
+  int weapon_index = GetWeaponSpriteIndex();
+  WeaponSprite weapon = weaponSprites[weapon_index];
+
+  int player_screen_x = player.x - camera.x;
+  int player_screen_y = player.y - camera.y;
+
+  int draw_x = player_screen_x + weapon.offset_x;
+  int draw_y = player_screen_y + weapon.offset_y;
+
+  for (int y = 0; y < weapon.height; y++) {
+    for (int x = 0; x < weapon.width; x++) {
+
+      const uint8_t pixel = spritesheet[(weapon.src_y + y) * spritesheet_width +
+                                        (weapon.src_x + x)];
+
+      if (pixel == 255) {
+        continue;
+      }
+
+      for (int dy = 0; dy < DRAW_SCALE; dy++) {
+        for (int dx = 0; dx < DRAW_SCALE; dx++) {
+          LCD_Set_Pixel((draw_x + x) * DRAW_SCALE + dx,
+                        (draw_y + y) * DRAW_SCALE + dy, pixel);
+        }
+      }
+    }
+  }
 }
 
 void DrawPlayer(const uint8_t *spritesheet, const uint16_t spritesheet_width) {
@@ -171,7 +316,13 @@ void DrawPlayer(const uint8_t *spritesheet, const uint16_t spritesheet_width) {
 
 }
 
-
 void DrawHUD(void) {
-    // Implementation for drawing HUD
+    // Player Health
+    for (int i = 0; i < player.health; i++) {
+        int x = 2 + i * 24;
+        int y = 2;
+
+        LCD_Draw_Rect(x,     y,     20, 14, 7, 1);  // outer
+        LCD_Draw_Rect(x + 3, y + 3, 14, 8,  8, 1);  // inner
+    }
 }

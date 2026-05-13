@@ -18,6 +18,7 @@ typedef struct {
     uint8_t btn3_pressed;  // 1 if BT3 was pressed this frame, 0 otherwise
     uint8_t btn4_pressed;  // 1 if BT4 was pressed this frame, 0 otherwise
     uint8_t btn5_pressed;  // 1 if BT5 was pressed this frame, 0 otherwise
+    uint8_t btn5_held;     // 1 if BT5 is still being held down
 } InputState;
 
 // Global input state (read by menu/games in their Update functions)
