@@ -56,7 +56,13 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     
     # Game implementations (placeholder - students implement these)
     ${CMAKE_SOURCE_DIR}/game_1/Game_1.c
+
     ${CMAKE_SOURCE_DIR}/game_2/Game_2.c
+    ${CMAKE_SOURCE_DIR}/game_2/G2_Bullets.c
+    ${CMAKE_SOURCE_DIR}/game_2/G2_Enemy.c
+    ${CMAKE_SOURCE_DIR}/game_2/G2_fx.c
+    ${CMAKE_SOURCE_DIR}/game_2/G2_Player.c
+    ${CMAKE_SOURCE_DIR}/game_2/G2_Sprites.c
 
     ${CMAKE_SOURCE_DIR}/game_3/Game_3.c
     ${CMAKE_SOURCE_DIR}/game_3/Player_3.c
