@@ -11,7 +11,7 @@ extern Joystick_t joystick_data;     // Current joystick readings
 
 // Menu options
 static const char* menu_options[] = {
-    "Game 1",
+    "Road Surfers",
     "Space Escape", 
     "Null Sector"
 };
