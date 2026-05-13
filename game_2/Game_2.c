@@ -295,13 +295,13 @@ static G2_State Pause(void){
 //Game Over Screen
 static G2_State Gameover(void){
     LCD_Fill_Buffer(G2_BLACK);
-    LCD_printString("GAME OVER", 40, 80, G2_WHITE, 4);
+    LCD_printString("GAME OVER", 40, 80, G2_WHITE, 2);
 
     char buf[28];
     sprintf(buf, "SCORE:%06lu", (unsigned long)s_Score);
-    LCD_printString(buf, 52, 120, G2_WHITE, 1);
+    LCD_printString(buf, 50, 120, G2_WHITE, 1);
     sprintf(buf, "WAVE:%d", (int)G2_Enemy_GetWave());
-    LCD_printString(buf, 60, 135, G2_WHITE, 1);
+    LCD_printString(buf, 50, 135, G2_WHITE, 1);
     LCD_printString("BT4 PLAY AGAIN", 50, 180, G2_WHITE, 1);
     LCD_printString("BT2 MAIN MENU", 50, 200, G2_WHITE, 1);
 
