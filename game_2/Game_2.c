@@ -131,7 +131,7 @@ static G2_State title(void){
     G2_FX_SpeedLinesUpdateDraw();
 
     LCD_printString("Space Escape", 18, 60, G2_CYAN, 2);
-    LCD_printString("Mission: Escape. Don't Die.", 24, 60, G2_WHITE, 1);
+    LCD_printString("Mission: Escape. Don't Die.", 18, 80, G2_WHITE, 1);
     //Sprite Decos
     LCD_Draw_Sprite_Colour(110, 120, G2_PLAYER_H, G2_PLAYER_W, G2_SPR_PLAYER, G2_CYAN);
     LCD_Draw_Sprite_Colour(50, 120, G2_ENEMY_H, G2_ENEMY_W, G2_SPR_ENEMY1, G2_MAGENTA);
@@ -146,8 +146,8 @@ static G2_State title(void){
     LCD_Draw_Rect(115, 136, 6, 3, Jetfire, 1);
 
     if(((s_frame_count/15)&1)==0){
-        LCD_printString("Press BT4 to start game", 32, 170, G2_WHITE, 1);
-        LCD_printString("Press BT2 to main menu", 32, 185, G2_WHITE, 1);
+        LCD_printString("Press BT4 to start game", 32, 160, G2_WHITE, 1);
+        LCD_printString("Press BT2 to main menu", 32, 180, G2_WHITE, 1);
     }
 
     LCD_Refresh(&cfg0);
